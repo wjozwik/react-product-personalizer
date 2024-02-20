@@ -8,10 +8,26 @@ const Product = props => {
   const [currentColor, setCurrectColor] = useState(props.colors[0]);
   const [currentSize, setCurrectSize] = useState(props.sizes[0].name);
 
-  console.log(currentColor, currentSize);
+  // console.log(currentColor, currentSize);
 
   const prepareColorClassName = color => {
     return styles['color' + color[0].toUpperCase() + color.substr(1).toLowerCase()]
+  };
+
+  const getPrice = () => {
+    const finalPrice = props.sizes.find((element) => element.name === currentSize);
+
+    return props.basePrice + finalPrice.additionalPrice;
+  };
+
+  const addToCart = (e) => {
+    e.preventDefault();
+    console.log(`Summary`);
+    console.log(`==========`);
+    console.log(`Name: ${props.title}`);
+    console.log(`Price: ${getPrice()}`);
+    console.log(`Size: ${currentSize}`);
+    console.log(`Color: ${currentColor}`);
   };
 
   return (
@@ -25,7 +41,7 @@ const Product = props => {
       <div>
         <header>
           <h2 className={styles.name}>{props.title}</h2>
-          <span className={styles.price}>Price: {props.basePrice}$</span>
+          <span className={styles.price}>Price: {getPrice()}$</span>
         </header>
         <form>
           <div className={styles.sizes}>
@@ -34,10 +50,7 @@ const Product = props => {
             {props.sizes.map(size =>
                 <li><button type="button" className={size.name === currentSize && styles.active} onClick={() => setCurrectSize(size.name)}>{size.name}</button></li>
                 )}
-{/*               <li><button type="button" className={styles.active}>S</button></li>
-              <li><button type="button">M</button></li>
-              <li><button type="button">L</button></li>
-              <li><button type="button">XL</button></li> */}
+
             </ul>
           </div>
           <div className={styles.colors}>
@@ -46,12 +59,9 @@ const Product = props => {
               {props.colors.map(color =>
                 <li><button type="button" className={clsx([prepareColorClassName(color)], color === currentColor && styles.active)} onClick={() => setCurrectColor(color)}/></li>
                 )}
-              {/* <li><button type="button" className={clsx(styles.colorBlack, styles.active)} /></li>
-              <li><button type="button" className={clsx(styles.colorRed)} /></li>
-              <li><button type="button" className={clsx(styles.colorWhite)} /></li> */}
             </ul>
           </div>
-          <Button className={styles.button}>
+          <Button className={styles.button} onClick={addToCart}>
             <span className="fa fa-shopping-cart" />
           </Button>
         </form>
