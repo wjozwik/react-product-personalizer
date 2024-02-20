@@ -12,7 +12,7 @@ const OptionColor = props => {
       <h3 className={styles.optionLabel}>Colors</h3>
       <ul className={styles.choices}>
         {props.colors.map(color =>
-          <li><button type="button" className={clsx([prepareColorClassName(color)], color === props.currentColor && styles.active)} onClick={() => props.setCurrentColor(color)} /></li>
+          <li key={color}><button type="button" className={clsx([prepareColorClassName(color)], color === props.currentColor && styles.active)} onClick={() => props.setCurrentColor(color)} /></li>
           )}
       </ul>
     </div>
