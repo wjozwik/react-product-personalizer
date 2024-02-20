@@ -1,14 +1,10 @@
 import Button from '../Button/Button';
+import OptionSize from '../OptionSize/OptionSize';
+import OptionColor from '../OptionColor/OptionColor';
 import styles from './ProductForm.module.scss';
 import PropTypes from 'prop-types';
-import clsx from 'clsx';
 
 const ProductForm = props => {
-
-  const prepareColorClassName = color => {
-    return styles['color' + color[0].toUpperCase() + color.substr(1).toLowerCase()]
-  };
-
   const addToCart = (e) => {
     e.preventDefault();
     console.log(`Summary`);
@@ -21,24 +17,16 @@ const ProductForm = props => {
 
   return (
   <form>
-    <div className={styles.sizes}>
-      <h3 className={styles.optionLabel}>Sizes</h3>
-      <ul className={styles.choices}>
-      {props.sizes.map(size =>
-          <li><button type="button" className={size.name === props.currentSize && styles.active} onClick={() => props.setCurrentSize(size.name)}>{size.name}</button></li>
-          )}
-
-      </ul>
-    </div>
-    <div className={styles.colors}>
-      <h3 className={styles.optionLabel}>Colors</h3>
-      <ul className={styles.choices}>
-        {props.colors.map(color =>
-          <li><button type="button" className={clsx([prepareColorClassName(color)], color === props.currentColor && styles.active)} onClick={() => props.setCurrentColor(color)}/></li>
-          )}
-      </ul>
-    </div>
-
+    <OptionSize 
+    sizes={props.sizes}
+    setCurrentSize={props.setCurrentSize}
+    currentSize={props.currentSize}
+    />
+    <OptionColor 
+    colors={props.colors}
+    setCurrentColor={props.setCurrentColor}
+    currentColor={props.currentColor}
+    />
     <Button className={styles.button} onClick={addToCart}>
       <span className="fa fa-shopping-cart" />
     </Button>
@@ -50,8 +38,12 @@ ProductForm.propTypes = {
   name: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   colors: PropTypes.array.isRequired,
-  currentColor: PropTypes.string.isRequired,
   sizes: PropTypes.array.isRequired,
+  currentColor: PropTypes.string.isRequired,
+  setCurrentColor: PropTypes.func.isRequired,
+  currentSize: PropTypes.string.isRequired,
+  setCurrentSize: PropTypes.func.isRequired,
+  getPrice: PropTypes.func.isRequired,
 }
 
 export default ProductForm;
