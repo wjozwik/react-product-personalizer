@@ -10,7 +10,7 @@ const ProductForm = props => {
     console.log(`Summary`);
     console.log(`==========`);
     console.log(`Name: ${props.title}`);
-    console.log(`Price: ${props.price()}`);
+    console.log(`Price: ${props.price}`);
     console.log(`Size: ${props.currentSize}`);
     console.log(`Color: ${props.currentColor}`);
   };
